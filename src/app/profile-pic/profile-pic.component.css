@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+}
+.container .cropper-div,
+.container .cropped-div {
+    flex: 1;
+}
+::ng-deep .container .ngx-ic-overlay,
+::ng-deep .container .ngx-ic-cropper{
+    margin-left: 0px !important;
+}
+.cropped-div > img {
+    border-radius: 100%;
+}
