@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   constructor() { }
   ngOnInit(): void {
-    this.toDataUrl('http://localhost:4200/assets/user.jpg', (myBase64: string) => {
+    this.toDataUrl(location.href + 'assets/user.jpg', (myBase64: string) => {
       this.croppedImage = myBase64;
     });
   }
