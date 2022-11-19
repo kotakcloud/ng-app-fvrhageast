@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 
 
@@ -13,16 +13,25 @@ export class ProfilePicComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
   imageChangedEvent: any = '';
+  @Input()
   croppedImage: any = '';
+  isEdit = false;
+
+  ngOnInit(): void {
+    // if (this.croppedImage) {
+    //   this.imageChangedEvent = {
+    //     "isTrusted": true
+    //   };
+
+    // }
+  }
 
   fileChangeEvent(event: any): void {
       this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {
+      // this.croppedImage = event.base64;
       this.croppedImage = event.base64;
   }
   imageLoaded(image: LoadedImage) {
@@ -35,7 +44,7 @@ export class ProfilePicComponent implements OnInit {
       // show message
   }
   save() {
-    this.update.emit(this.croppedImage);
+    this?.croppedImage && this.update.emit(this.croppedImage);
   }
   cancel() {
     this.update.emit(null);

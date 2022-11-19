@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,15 +7,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  isEditable = false;
+
   openDropdown = false;
   openModal = false;
-  croppedImage = 'https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500';
+  croppedImage: string = '';
 
+  constructor() { }
   ngOnInit(): void {
+    this.toDataUrl('http://localhost:4200/assets/user.jpg', (myBase64: string) => {
+      this.croppedImage = myBase64;
+    });
   }
 
+  toDataUrl(src: string, callback: Function){
+    var image = new Image();
+    image.crossOrigin = 'Anonymous';
+    image.onload = function(){
+       var canvas = document.createElement('canvas');
+       var context: any = canvas.getContext('2d');
+       canvas.height = 400;
+       canvas.width = 400;
+       context.drawImage(this, 0, 0);
+       var dataURL = canvas.toDataURL('image/jpeg');
+       callback(dataURL);
+    };
+    image.src = src;
+ }
+
+
+
   openProfileModal() {
+    if (!this.isEditable) return;
     this.openDropdown = false;
     this.openModal = true;
   }
